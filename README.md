@@ -124,7 +124,11 @@ This runs the whole suite and exits 0 when everything passes. A GitHub Actions w
 
 ## Author's note
 
-<!-- TODO(author): write a short, honest note in your own words about why you built this and what you learned. Left blank on purpose. -->
+I'm new to Clojure. I built this to learn it by working on a problem I find interesting: how to keep software updates to a medical device moving without skipping the review a change actually needs.
+
+I used Claude (an AI assistant) to help plan and write the code, and to run parallel drafts of individual modules. I read and ran all of it, and I'm working through it file by file so I understand how each part works. The design choices are in the limitations section above. The ones I'd defend first are comparing vectors and sets as whole values, and escalating any change no rule covers.
+
+The rules and thresholds are made up for illustration. If I kept going, the next things I'd want are a way to mark a change as pre-approved, and rules that cite where they come from, once I had checked those sources properly.
 
 ## Data shapes
 
