@@ -1,0 +1,39 @@
+;; Shared fixture: one old/new card pair and the exact change list that
+;; mcc.diff/diff-cards must return for it (sorted by path, see CONTRACT.md).
+{:old
+ {:name "ExampleDR"
+  :version "1.0.0"
+  :intended-use "Screening for diabetic retinopathy in adults"
+  :model {:architecture "resnet50"
+          :training-data-hash "a1b2c3"
+          :input-types [:fundus-photo]
+          :notes "baseline"}
+  :performance {:sensitivity 0.92
+                :specificity 0.88}
+  :deployment {:platforms #{:cloud}}}
+
+ :new
+ {:name "ExampleDR"
+  :version "1.1.0"
+  :intended-use "Screening for diabetic retinopathy in adults"
+  :model {:architecture "resnet50"
+          :training-data-hash "a1b2c3"
+          :input-types [:fundus-photo :oct-scan]
+          :preprocessing "clahe"}
+  :performance {:sensitivity 0.85
+                :specificity 0.88}
+  :deployment {:platforms #{:cloud :edge}}}
+
+ :changes
+ [{:path [:deployment :platforms] :kind :changed
+   :before #{:cloud} :after #{:cloud :edge}}
+  {:path [:model :input-types] :kind :changed
+   :before [:fundus-photo] :after [:fundus-photo :oct-scan]}
+  {:path [:model :notes] :kind :removed
+   :before "baseline"}
+  {:path [:model :preprocessing] :kind :added
+   :after "clahe"}
+  {:path [:performance :sensitivity] :kind :changed
+   :before 0.92 :after 0.85}
+  {:path [:version] :kind :changed
+   :before "1.0.0" :after "1.1.0"}]}

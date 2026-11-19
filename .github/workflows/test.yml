@@ -1,0 +1,37 @@
+# Runs the test suite on every push and pull request.
+name: test
+
+on:
+  push:
+  pull_request:
+
+# The job only needs to read the repository.
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Java must be installed before the Clojure CLI.
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: DeLaGuardo/setup-clojure@13
+        with:
+          cli: latest
+
+      # Cache Maven jars and git deps (the test-runner is a git dep).
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+          key: deps-${{ runner.os }}-${{ hashFiles('deps.edn') }}
+          restore-keys: deps-${{ runner.os }}-
+
+      - run: clojure -M:test

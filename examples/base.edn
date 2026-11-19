@@ -1,0 +1,10 @@
+{:name "ExampleDR"
+ :version "1.0.0"
+ :intended-use "Screening for diabetic retinopathy in adults"
+ :model {:architecture "resnet50"
+         :training-data-hash "a1b2c3"
+         :input-types [:fundus-photo]
+         :notes "baseline"}
+ :performance {:sensitivity 0.92
+               :specificity 0.88}
+ :deployment {:platforms #{:cloud}}}
